@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { DataStorageService } from '../../shared/data-storage.service';
+// import { HttpEvent, HttpEventType } from '@angular/common/http';
 import { Response } from '@angular/http';
+
 import { Recipe } from '../../recipes/recipe.model';
 import { RecipeService } from '../../recipes/recipe.service';
 import { Ingredient } from '../../shared/ingredient.model';
@@ -24,12 +26,13 @@ export class HeaderComponent {
 
   onSaveData() {
     this.dataStorageService.storeRecipes()
-      .subscribe((response: Response) => {
+      .subscribe((response) => {
         console.log(response);
+        // console.log(response.type === HttpEventType.Sent);
       }
     );
     this.dataStorageService.storeShoppingItems()
-      .subscribe((response: Response) => {
+      .subscribe((response) => {
         console.log(response);
       }
     );
