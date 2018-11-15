@@ -31,11 +31,7 @@ export class RecipeListComponent implements OnInit, OnDestroy {
     }
 
     onNewRecipe() {
-      if (!this.authService.isAuthenticated()) {
-        alert('You need to be logged in to add a new recipe');
-        this.router.navigate(['/']);
-      }
-        this.router.navigate(['new'], {relativeTo: this.route});
+      this.router.navigate(['new'], {relativeTo: this.route});
     }
 
     ngOnDestroy() {

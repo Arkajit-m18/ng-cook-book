@@ -1,13 +1,16 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders, HttpParams, HttpRequest } from "@angular/common/http";
 // import { Http, Response } from "@angular/http";
-import { map } from 'rxjs/operators';
+import { map, switchMap, take } from 'rxjs/operators';
+import { Store } from "@ngrx/store";
 
 import { RecipeService } from "../recipes/recipe.service";
 import { Recipe } from "../recipes/recipe.model";
 import { ShoppingListService } from "../shopping-list/shopping-list.service";
 import { Ingredient } from "./ingredient.model";
 import { AuthService } from "../auth/auth.service";
+import * as fromApp from '../store/app.reducers';
+import * as fromShoppingList from '../shopping-list/store/shopping-list.reducers';
 
 @Injectable()
 
@@ -17,10 +20,11 @@ export class DataStorageService {
     private httpClient: HttpClient,
     private recipeService: RecipeService,
     private shoppingListService: ShoppingListService,
-    private authService: AuthService) {}
+    private authService: AuthService,
+    private store: Store<fromApp.AppState>) {}
 
   storeRecipes() {
-    const token = this.authService.getToken();
+    // const token = this.authService.getToken();
     // const headers = new HttpHeaders().set('Authorization', 'Bearer asdefhihvsehaggf');
     return this.httpClient.put('https://ng-cook-book-38806.firebaseio.com/recipes.json', this.recipeService.getRecipes(), {
       observe: 'body',
@@ -33,7 +37,7 @@ export class DataStorageService {
   }
 
   getRecipes() {
-    const token = this.authService.getToken();
+    // const token = this.authService.getToken();
     return this.httpClient.get<Recipe[]>('https://ng-cook-book-38806.firebaseio.com/recipes.json', {
       observe: 'body', // response
       responseType: 'json', // text, arraybuffer, blob
@@ -63,21 +67,32 @@ export class DataStorageService {
   }
 
   storeShoppingItems() {
-    const token = this.authService.getToken();
+
+    // const token = this.authService.getToken();
     // return this.httpClient.put('https://ng-cook-book-38806.firebaseio.com/shoppingList.json',
     // this.shoppingListService.getIngredients(), {
     //   params: new HttpParams().set('auth', token)
     // });
 
-    const request = new HttpRequest('PUT', 'https://ng-cook-book-38806.firebaseio.com/shoppingList.json', this.shoppingListService.getIngredients(), {
-      reportProgress: true,
-      // params: new HttpParams().set('auth', token)
-    })
-    return this.httpClient.request(request);
+    return this.store.select('shoppingList')
+      .pipe(take(1),switchMap((ingredientsList: fromShoppingList.State) => {
+        const request = new HttpRequest('PUT', 'https://ng-cook-book-38806.firebaseio.com/shoppingList.json', ingredientsList.ingredients, {
+          reportProgress: true,
+          // params: new HttpParams().set('auth', token)
+        });
+        return this.httpClient.request(request);
+      })
+    );
+
+    // const request = new HttpRequest('PUT', 'https://ng-cook-book-38806.firebaseio.com/shoppingList.json', this.shoppingListService.getIngredients(), {
+    //   reportProgress: true,
+    //   // params: new HttpParams().set('auth', token)
+    // });
+    // return this.httpClient.request(request);
   }
 
   getShoppingItems() {
-    const token = this.authService.getToken();
+    // const token = this.authService.getToken();
     return this.httpClient.get<Ingredient[]>('https://ng-cook-book-38806.firebaseio.com/shoppingList.json',{
       // params: new HttpParams().set('auth', token)
     })

@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DataStorageService } from '../../shared/data-storage.service';
-// import { HttpEvent, HttpEventType } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
 import { Response } from '@angular/http';
+// import { HttpEvent, HttpEventType } from '@angular/common/http';
 
 import { Recipe } from '../../recipes/recipe.model';
 import { RecipeService } from '../../recipes/recipe.service';
@@ -9,20 +11,31 @@ import { Ingredient } from '../../shared/ingredient.model';
 import { ShoppingListService } from '../../shopping-list/shopping-list.service';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
+import * as fromApp from '../../store/app.reducers';
+import * as fromAuth from '../../auth/store/auth.reducers';
+import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
+import * as AuthActions from '../../auth/store/auth.actions';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+
+  authState: Observable<fromAuth.State>;
 
   constructor(
     private dataStorageService: DataStorageService,
     private recipeService: RecipeService,
     private shoppingListService: ShoppingListService,
     private authService: AuthService,
-    private router: Router) {}
+    private router: Router,
+    private store: Store<fromApp.AppState>) {}
+
+  ngOnInit() {
+    this.authState = this.store.select('auth');
+  }
 
   onSaveData() {
     this.dataStorageService.storeRecipes()
@@ -46,7 +59,8 @@ export class HeaderComponent {
     );
     this.dataStorageService.getShoppingItems()
       .subscribe((response: Ingredient[]) => {
-        this.shoppingListService.setIngredients(response);
+        this.store.dispatch(new ShoppingListActions.FetchIngredients(response));
+         // this.shoppingListService.setIngredients(response);
       }
     );
   }
@@ -68,11 +82,12 @@ export class HeaderComponent {
   // }
 
   onLogout() {
-    this.authService.logout();
-    this.router.navigate(['/signin']);
+    this.store.dispatch(new AuthActions.TryLogout());
+    // this.authService.logout();
+    // this.router.navigate(['/signin']);
   }
 
-  isAuthenticated() {
-    return this.authService.isAuthenticated();
-  }
+  // isUserAuthenticated() {
+  //   return this.authService.isAuthenticated();
+  // }
 }

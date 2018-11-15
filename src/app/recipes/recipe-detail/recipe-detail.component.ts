@@ -6,7 +6,9 @@ import { RecipeService } from '../recipe.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { AuthService } from 'src/app/auth/auth.service';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
-import * as fromShoppingList from '../../shopping-list/store/shopping-list.reducers';
+import * as fromApp from '../../store/app.reducers';
+import * as fromAuth from '../../auth/store/auth.reducers';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -23,7 +25,7 @@ export class RecipeDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private authService: AuthService,
-    private store: Store<fromShoppingList.AppState>) {}
+    private store: Store<fromApp.AppState>) {}
 
   ngOnInit() {
     this.route.params
@@ -39,20 +41,11 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   onEditRecipe() {
-    if (!this.authService.isAuthenticated()) {
-      alert('You need to be logged in to edit a recipe.');
-      this.router.navigate(['/']);
-    }
     this.router.navigate(['edit'], {relativeTo: this.route});
   }
 
   onDeleteRecipe() {
-    if (this.authService.isAuthenticated()) {
       this.recipeService.deleteRecipe(this.id);
       this.router.navigate(['/Recipes']);
-    } else {
-      alert('You need to be logged in to delete a recipe.');
-      this.router.navigate(['/']);
-    }
   }
 }
