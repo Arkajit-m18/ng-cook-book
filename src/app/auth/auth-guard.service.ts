@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanLoad, Route } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { AuthService } from './auth.service';
 import * as fromApp from '../store/app.reducers';
@@ -20,7 +20,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.store.select('auth')
-      .pipe(map((authState: fromAuth.State) => {
+      .pipe(take(1),map((authState: fromAuth.State) => {
         return authState.authenticated;
       })
     );
@@ -32,7 +32,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     route: Route
   ): Observable<boolean> | Promise<boolean> | boolean {
     return this.store.select('auth')
-      .pipe(map((authState: fromAuth.State) => {
+      .pipe(take(1),map((authState: fromAuth.State) => {
         return authState.authenticated;
       })
     );

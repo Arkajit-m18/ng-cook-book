@@ -15,6 +15,7 @@ import * as fromApp from '../../store/app.reducers';
 import * as fromAuth from '../../auth/store/auth.reducers';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
 import * as AuthActions from '../../auth/store/auth.actions';
+import * as RecipeActions from '../../recipes/store/recipe.actions';
 
 @Component({
   selector: 'app-header',
@@ -38,32 +39,42 @@ export class HeaderComponent implements OnInit {
   }
 
   onSaveData() {
-    this.dataStorageService.storeRecipes()
-      .subscribe((response) => {
-        console.log(response);
-        // console.log(response.type === HttpEventType.Sent);
-      }
-    );
-    this.dataStorageService.storeShoppingItems()
-      .subscribe((response) => {
-        console.log(response);
-      }
-    );
+    this.store.dispatch(new RecipeActions.StoreRecipes());
+
+    this.store.dispatch(new ShoppingListActions.StoreIngredients());
   }
+    // this.dataStorageService.storeRecipes()
+    //   .subscribe((response) => {
+    //     console.log(response);
+    //     // console.log(response.type === HttpEventType.Sent);
+    //   }
+    // );
+
+    // this.dataStorageService.storeShoppingItems()
+    //   .subscribe((response) => {
+    //     console.log(response);
+    //   }
+    // );
 
   onFetchData() {
-    this.dataStorageService.getRecipes()
-      .subscribe((response: Recipe[]) => {
-        this.recipeService.setRecipes(response);
-      }
-    );
-    this.dataStorageService.getShoppingItems()
-      .subscribe((response: Ingredient[]) => {
-        this.store.dispatch(new ShoppingListActions.FetchIngredients(response));
-         // this.shoppingListService.setIngredients(response);
-      }
-    );
+    this.store.dispatch(new RecipeActions.FetchRecipes());
+
+    this.store.dispatch(new ShoppingListActions.FetchIngredients());
   }
+
+    // this.dataStorageService.getRecipes()
+    //   .subscribe((response: Recipe[]) => {
+    //     this.recipeService.setRecipes(response);
+    //   }
+    // );
+
+    // this.dataStorageService.getShoppingItems()
+    //   .subscribe((response: Ingredient[]) => {
+    //     this.store.dispatch(new ShoppingListActions.FetchIngredients(response));
+
+         // this.shoppingListService.setIngredients(response);
+    // );
+
 
   // onRecipes() {
   //   if (!this.authService.isAuthenticated()){
@@ -82,7 +93,7 @@ export class HeaderComponent implements OnInit {
   // }
 
   onLogout() {
-    this.store.dispatch(new AuthActions.TryLogout());
+    this.store.dispatch(new AuthActions.Logout());
     // this.authService.logout();
     // this.router.navigate(['/signin']);
   }
