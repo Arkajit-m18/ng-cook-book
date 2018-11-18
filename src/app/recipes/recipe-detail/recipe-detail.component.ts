@@ -4,9 +4,9 @@ import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 
 // import { Recipe } from '../recipe.model';
-import { RecipeService } from '../recipe.service';
+// import { RecipeService } from '../recipe.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { AuthService } from 'src/app/auth/auth.service';
+// import { AuthService } from 'src/app/auth/auth.service';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
 import * as fromApp from '../../store/app.reducers';
 import * as fromRecipe from '../store/recipe.reducers';
@@ -26,10 +26,10 @@ export class RecipeDetailComponent implements OnInit {
   id: number;
 
   constructor(
-    private recipeService: RecipeService,
+    // private recipeService: RecipeService,
     private route: ActivatedRoute,
     private router: Router,
-    private authService: AuthService,
+    // private authService: AuthService,
     private store: Store<fromApp.AppState>) {}
 
   ngOnInit() {
@@ -46,7 +46,7 @@ export class RecipeDetailComponent implements OnInit {
       .pipe(take(1))
       .subscribe((recipeState: fromRecipe.State) => {
         this.store.dispatch(new ShoppingListActions.AddIngredients(recipeState.recipes[this.id].ingredients));
-      })
+      });
     // this.store.dispatch(new ShoppingListActions.AddIngredients(this.recipe.ingredients));
 
     // this.recipeService.addToShoppingList(this.recipe.ingredients);

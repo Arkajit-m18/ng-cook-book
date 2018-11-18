@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { map, take } from 'rxjs/operators';
 
-import { AuthService } from './auth.service';
+// import { AuthService } from './auth.service';
 import * as fromApp from '../store/app.reducers';
 import * as fromAuth from './store/auth.reducers';
 
@@ -12,7 +12,7 @@ import * as fromAuth from './store/auth.reducers';
 export class AuthGuard implements CanActivate, CanLoad {
 
   constructor(
-    private authService: AuthService,
+    // private authService: AuthService,
     private store: Store<fromApp.AppState>) {}
 
   canActivate(

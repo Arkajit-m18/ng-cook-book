@@ -5,9 +5,8 @@ import { switchMap, map, withLatestFrom } from "rxjs/operators";
 import { Store } from "@ngrx/store";
 
 import * as ShoppingListActions from './shopping-list.actions';
-import { Ingredient } from "src/app/shared/ingredient.model";
+import { Ingredient } from '../../shared/ingredient.model';
 import * as fromApp from '../../store/app.reducers';
-import * as fromShoppingList from '../store/shopping-list.reducers';
 
 @Injectable()
 export class ShoppingListEffects {

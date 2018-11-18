@@ -4,7 +4,7 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { take } from 'rxjs/operators';
 
-import { RecipeService } from '../recipe.service';
+// import { RecipeService } from '../recipe.service';
 import * as RecipeActions from '../store/recipe.actions';
 import * as fromRecipe from '../store/recipe.reducers';
 // import { Recipe } from '../recipe.model';
@@ -23,7 +23,7 @@ export class RecipeEditComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private recipeService: RecipeService,
+    // private recipeService: RecipeService,
     private store: Store<fromRecipe.FeatureState>) {}
 
   onSubmit() {
@@ -95,7 +95,7 @@ export class RecipeEditComponent implements OnInit {
           }
         }
       });
-      
+
       // const recipe = this.recipeService.getRecipe(this.id);
     }
 

@@ -557,7 +557,19 @@ MIT
 @angular/router
 MIT
 
-@angular/http
+firebase/auth
+
+firebase/database
+
+firebase/storage
+
+@ngrx/router-store
+MIT
+
+@ngrx/store
+MIT
+
+@ngrx/effects
 MIT
 
 @angular/core

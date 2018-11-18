@@ -3,8 +3,8 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 
-import { Ingredient } from 'src/app/shared/ingredient.model';
-import { ShoppingListService } from '../shopping-list.service';
+import { Ingredient } from '../../shared/ingredient.model';
+// import { ShoppingListService } from '../shopping-list.service';
 import * as ShoppingListActions from './../store/shopping-list.actions';
 import * as fromApp from '../../store/app.reducers';
 
@@ -23,7 +23,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   editedItem: Ingredient;
 
   constructor(
-    private shoppingListService: ShoppingListService,
+    // private shoppingListService: ShoppingListService,
     private store: Store<fromApp.AppState>) { }
 
   ngOnInit() {

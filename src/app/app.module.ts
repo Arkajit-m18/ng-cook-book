@@ -25,7 +25,7 @@ import { ShoppingListEffects } from './shopping-list/store/shopping-list.effects
     ShoppingListModule,
     SharedModule,
     AuthModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({appId: 'my-app'}),
     HttpClientModule,
     CoreModule,
     StoreModule.forRoot(reducers),

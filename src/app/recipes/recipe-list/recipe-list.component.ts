@@ -2,12 +2,11 @@ import { Component, OnInit } from "@angular/core";
 import { Store } from "@ngrx/store";
 
 // import { Recipe } from '../recipe.model';
-import { RecipeService } from "../recipe.service";
+// import { RecipeService } from "../recipe.service";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Subscription, Observable } from "rxjs";
-import { AuthService } from "src/app/auth/auth.service";
+import { Observable } from "rxjs";
+// import { AuthService } from "src/app/auth/auth.service";
 import * as fromRecipe from '../store/recipe.reducers';
-import * as RecipeActions from '../store/recipe.actions';
 
 @Component({
     selector: 'app-recipe-list',
@@ -21,11 +20,12 @@ export class RecipeListComponent implements OnInit {
     //subscription: Subscription;
 
     constructor(
-        private recipeService: RecipeService,
+        // private recipeService: RecipeService,
+        // private authService: AuthService,
         private router: Router,
         private route: ActivatedRoute,
         private store: Store<fromRecipe.FeatureState>,
-        private authService: AuthService) {}
+        ) {}
 
     ngOnInit() {
       this.recipeState = this.store.select('recipes');

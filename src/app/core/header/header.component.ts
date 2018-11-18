@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { DataStorageService } from '../../shared/data-storage.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { Response } from '@angular/http';
+// import { Response } from '@angular/http';
 // import { HttpEvent, HttpEventType } from '@angular/common/http';
+// import { DataStorageService } from '../../shared/data-storage.service';
 
-import { Recipe } from '../../recipes/recipe.model';
-import { RecipeService } from '../../recipes/recipe.service';
-import { Ingredient } from '../../shared/ingredient.model';
-import { ShoppingListService } from '../../shopping-list/shopping-list.service';
-import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
 import * as fromApp from '../../store/app.reducers';
 import * as fromAuth from '../../auth/store/auth.reducers';
 import * as ShoppingListActions from '../../shopping-list/store/shopping-list.actions';
 import * as AuthActions from '../../auth/store/auth.actions';
 import * as RecipeActions from '../../recipes/store/recipe.actions';
+// import { Recipe } from '../../recipes/recipe.model';
+// import { RecipeService } from '../../recipes/recipe.service';
+// import { Ingredient } from '../../shared/ingredient.model';
+// import { ShoppingListService } from '../../shopping-list/shopping-list.service';
+// import { AuthService } from '../../auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -27,11 +27,11 @@ export class HeaderComponent implements OnInit {
   authState: Observable<fromAuth.State>;
 
   constructor(
-    private dataStorageService: DataStorageService,
-    private recipeService: RecipeService,
-    private shoppingListService: ShoppingListService,
-    private authService: AuthService,
-    private router: Router,
+    // private dataStorageService: DataStorageService,
+    // private recipeService: RecipeService,
+    // private shoppingListService: ShoppingListService,
+    // private authService: AuthService,
+    // private router: Router,
     private store: Store<fromApp.AppState>) {}
 
   ngOnInit() {
