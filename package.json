@@ -8,7 +8,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "webpack:server": "webpack --config webpack.server.config.js --progress --colors"
+    "webpack:server": "webpack --config webpack.server.config.js --progress --colors",
+    "postinstall": "ng build --prod && ng run Cook-Book:server && npm run webpack:server"
   },
   "private": true,
   "dependencies": {
@@ -58,7 +59,7 @@
     "webpack-cli": "^3.1.2"
   },
   "engines": {
-    "node": "10.10.1",
+    "node": "10.10.0",
     "npm": "6.4.1"
   }
 }
